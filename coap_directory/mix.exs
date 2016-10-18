@@ -14,7 +14,8 @@ defmodule CoapDirectory.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger]]
+    [ mod: {CoapDirectory, []},
+      applications: [:logger, :gen_coap]]
   end
 
   # Dependencies can be Hex packages:
@@ -27,6 +28,9 @@ defmodule CoapDirectory.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [
+      {:gen_coap, git: "https://github.com/gotthardp/gen_coap.git"},
+      {:coap, path: "../coap"}
+    ]
   end
 end

@@ -17,8 +17,10 @@ defmodule CoapNode.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     [
-      mod: {CoapNode, port()},
-      applications: [:logger]]
+      mod: {CoapNode, port},
+      applications: [:logger],
+      env: [coap_port: port, registry_endpoint: 'coap://127.0.0.1:5683/registry']
+    ]
   end
 
   # Dependencies can be Hex packages:

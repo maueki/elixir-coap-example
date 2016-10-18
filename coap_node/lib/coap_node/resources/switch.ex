@@ -3,8 +3,19 @@ defmodule CoapNode.Resources.Switch do
   alias Coap.Storage
 
   def start(path, params) do
-    Storage.set(path_to_string(path), false)
-    super(path, params)
+    {:ok, port} = Application.fetch_env(:coap_node, :coap_port)
+    {:ok, registry_endpoint} = Application.fetch_env(:coap_node, :registry_endpoint)
+    {:ok, :content, {:coap_content, _etags, _max_age, _format_, payload}} = :coap_client.request(
+      :post, registry_endpoint,
+      coap_content(payload: path_to_string(path) <> " " <> Integer.to_string(port))
+    )
+
+    case payload do
+      "ok" ->
+        Storage.set(path_to_string(path), false)
+        super(path, params)
+      "path taken" -> :path_taken
+    end
   end
 
   # gen_coap handlers
