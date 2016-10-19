@@ -30,6 +30,7 @@ defmodule CoapDirectory.Mixfile do
   defp deps do
     [
       {:gen_coap, git: "https://github.com/gotthardp/gen_coap.git"},
+      {:cowboy, "~> 1.0"},
       {:coap, path: "../coap"}
     ]
   end
